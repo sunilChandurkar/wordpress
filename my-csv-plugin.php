@@ -18,7 +18,15 @@
      */
 
     /*****************Create a Custom post type***********/
+    
+    //Init runs after WordPress has finished loading but before any headers are sent.
     add_action( 'init', 'create_post_type' );
+    
+    /*
+     * Creates a custom post type using register post type
+     * http://codex.wordpress.org/Function_Reference/register_post_type
+     * @return void
+     */
     function create_post_type() {
       register_post_type( 'book',
         array(
@@ -33,8 +41,15 @@
     }
 
     /*****************Create a Custom User Meta Field**************/
+    
+    //These actions run when a user's profile is shown
     add_action( 'show_user_profile', 'my_show_extra_profile_fields' );
     add_action( 'edit_user_profile', 'my_show_extra_profile_fields' );
+    
+    /*
+     * Adds a field to the User profile form when user info is shown
+     * @return html
+     */
 
     function my_show_extra_profile_fields( $user ) { ?>
 
@@ -55,9 +70,11 @@
     <?php }
 
     //Save the "user_security_field" data
+    //These actions are run when user profile is updated
     add_action( 'personal_options_update', 'my_save_extra_profile_fields' );
     add_action( 'edit_user_profile_update', 'my_save_extra_profile_fields' );
 
+    //updates user meta
     function my_save_extra_profile_fields( $user_id ) {
 
             if ( !current_user_can( 'edit_user', $user_id ) )
@@ -144,3 +161,11 @@
 
 
     add_action( 'init', 'example_add_rewrite_rules' );
+    
+    //Usage
+    /* Create a page template with Template Name: My Custom Page
+     * Add this code line - my_csv_export(); which will call the plugin function
+     * Create a Page with title Download CSV using the above template
+     * To Download CSV - http://yourhost/library.csv
+     * To Display CSV - http://yourhost/library.csv?show
+     */
