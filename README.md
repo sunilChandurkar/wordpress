@@ -1,3 +1,3 @@
 # wordpress
 Useful Wordpress Plugin
-MadarChid
+MadarChod
